@@ -1,6 +1,8 @@
 # OhSINT
 ![tryhackme_logo](https://user-images.githubusercontent.com/83867734/185771149-cb02c6f2-8476-4ab3-a626-cca8db0a08bf.png)
 
+Difficulty: **Easy**
+
 Tags
 --
 * OSINT
