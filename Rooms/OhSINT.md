@@ -7,14 +7,8 @@ Tags
 
 Tools used
 --
-* nmap
-* ffuf
-* smbclient
-* hydra
-* ssh
-* linpeas
-* ssh2john
-* john
+* exiftool
+* https://wigle.net
 
 Machines
 --
@@ -81,7 +75,7 @@ Question: **Whats the SSID of the WAP he connected to?**
 
 The only information we have related to WiFi is the BSSID from his Twitter account: `B4:5D:50:AA:86:41`.
 
-For getting the SSID from the BSSID, we need to use an online service: https://wigle.net/
+For getting the SSID from the BSSID, we need to use an online service: https://wigle.net
 
 We need to register an account there, then View -> Advanced Search -> WiFi/Cell Detail tab, type the BSSID and click on Query.
 
