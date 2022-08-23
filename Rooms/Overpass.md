@@ -8,10 +8,10 @@ Obviously a perfect commercial success!
 
 Tags
 --
-* brute forcing 
-* hash cracking 
-* service enumeration
-* Linux Enumeration
+* Fuzzing
+* Brute Forcing 
+* Hash Cracking 
+* Service Enumeration
 
 Tools used
 --

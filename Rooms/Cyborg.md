@@ -7,6 +7,7 @@ Compromise the machine and read the user.txt and root.txt.
 
 Tags
 --
+* Fuzzing
 * Brute Forcing 
 * Hash Cracking 
 * Borg Backup

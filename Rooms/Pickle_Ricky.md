@@ -7,10 +7,10 @@ This Rick and Morty themed challenge requires you to exploit a webserver to find
 
 Tags
 --
-* brute forcing 
-* hash cracking 
-* service enumeration
-* Linux Enumeration
+* Fuzzing
+* Brute Forcing 
+* Hash Cracking 
+* Service Enumeration
 
 Tools used
 --
