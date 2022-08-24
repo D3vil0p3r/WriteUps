@@ -8,16 +8,19 @@ Compromise the machine and read the user.txt and root.txt.
 Tags
 --
 * Fuzzing
-* Reverse Shell 
-* Weak Upload Filtering
-* SUID
+* Brute Forcing
+* Hash Cracking
+* Sudo CVE-2019-14287
 
 Tools used
 --
 * nmap
 * ffuf
-* find
-* python
+* burp
+* hydra
+* binwalk
+* steghide
+* john
 
 Machines
 --
