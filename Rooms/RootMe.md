@@ -33,7 +33,6 @@ Victim:
 
 Phase 1: Enumeration
 --
-Let's use Nmap with `-g 53` argument for finding the port 80 as opened:
 ```
 sudo nmap -sS -sC -sV 10.10.74.128 -p- -T5 -vvv
 
@@ -59,6 +58,8 @@ panel                   [Status: 301, Size: 312, Words: 20, Lines: 10, Duration:
 ```
 By visiting `/panel` directory, we can see an upload form. On the upload form there is a weak filter. You can upload only reverse shell with the extensions php1, php2, php3, php4, php5, php6, php7, php8, php9.
 
+Phase 2: Foothold
+--
 Once you uploaded a reverse shell, you can call it by visiting:
 ```
 http://10.10.74.128/uploads/rev.php5
