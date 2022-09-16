@@ -32,6 +32,7 @@ Victim:
 
 Phase 1: Enumeration
 --
+```
 sudo nmap -sS -sC -sV 10.10.40.228 -p- -T5 -vvv
 
 <SNIP>
@@ -75,6 +76,8 @@ cat home/www-data/flag.txt
 
 6470e394cbf6dab6a91682cc8585059b
 ```
+Phase 3: Privilege Escalation
+--
 Trying to search for some interesting data inside the web server, we can find an interesting file `/var/www/html/fuel/application/config/database.php`:
 ```php
 <SNIP>
