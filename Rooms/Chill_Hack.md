@@ -8,16 +8,24 @@ Compromise the machine and read the user.txt and root.txt.
 Tags
 --
 * Fuzzing
+* Command Injection Filtering
+* Reverse Shell
+* Steganography
+* John
+* Hardcoded Credentials
 * SSH
-* Search Username
 * Sudoers
+* Docker
 
 Tools used
 --
 * nmap
 * ffuf
+* steghide
+* zip2john
+* john
 * ssh
-* wget
+* docker
 
 Machines
 --
