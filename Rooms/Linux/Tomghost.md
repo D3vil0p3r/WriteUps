@@ -41,12 +41,25 @@ Phase 1: Enumeration
 sudo nmap -sS -sC -sV 10.10.18.94 -p- -T5 -vvv
 
 <SNIP>
-Initiating SYN Stealth Scan at 00:06
-Scanning 10.10.18.94 [65535 ports]
-Discovered open port 22/tcp on 10.10.18.94
-Discovered open port 53/tcp on 10.10.18.94
-Discovered open port 8080/tcp on 10.10.18.94
-Discovered open port 8009/tcp on 10.10.18.94
+PORT     STATE SERVICE    REASON         VERSION
+22/tcp   open  ssh        syn-ack ttl 63 OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 f3:c8:9f:0b:6a:c5:fe:95:54:0b:e9:e3:ba:93:db:7c (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQvC8xe2qKLoPG3vaJagEW2eW4juBu9nJvn53nRjyw7y/0GEWIxE1KqcPXZiL+RKfkKA7RJNTXN2W9kCG8i6JdVWs2x9wD28UtwYxcyo6M9dQ7i2mXlJpTHtSncOoufSA45eqWT4GY+iEaBekWhnxWM+TrFOMNS5bpmUXrjuBR2JtN9a9cqHQ2zGdSlN+jLYi2Z5C7IVqxYb9yw5RBV5+bX7J4dvHNIs3otGDeGJ8oXVhd+aELUN8/C2p5bVqpGk04KI2gGEyU611v3eOzoP6obem9vsk7Kkgsw7eRNt1+CBrwWldPr8hy6nhA6Oi5qmJgK1x+fCmsfLSH3sz1z4Ln
+|   256 dd:1a:09:f5:99:63:a3:43:0d:2d:90:d8:e3:e1:1f:b9 (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOscw5angd6i9vsr7MfCAugRPvtx/aLjNzjAvoFEkwKeO53N01Dn17eJxrbIWEj33sp8nzx1Lillg/XM+Lk69CQ=
+|   256 48:d1:30:1b:38:6c:c6:53:ea:30:81:80:5d:0c:f1:05 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqgzoXzgz5QIhEWm3+Mysrwk89YW2cd2Nmad+PrE4jw
+53/tcp   open  tcpwrapped syn-ack ttl 63
+8009/tcp open  ajp13      syn-ack ttl 63 Apache Jserv (Protocol v1.3)
+| ajp-methods: 
+|_  Supported methods: GET HEAD POST OPTIONS
+8080/tcp open  http       syn-ack ttl 63 Apache Tomcat 9.0.30
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-favicon: Apache Tomcat
+|_http-title: Apache Tomcat/9.0.30
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 <SNIP>
 ```
 Interesting looking for 8009 port. It is related to AJP connector, so it could be prone to the Ghostcat CVE-2020-1938. Read https://github.com/Hancheng-Lei/Hacking-Vulnerability-CVE-2020-1938-Ghostcat/blob/main/CVE-2020-1938.md for details.
