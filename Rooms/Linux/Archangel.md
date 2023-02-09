@@ -10,6 +10,7 @@ Tags
 * LFI
 * SSH
 * Cron
+* SUID
 
 Tools used
 --
