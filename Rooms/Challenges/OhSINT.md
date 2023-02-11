@@ -69,7 +69,7 @@ We will get mainly two interesting URLs:
 
 According these results, the only avatar we see it is on Twitter account, so the answer is `cat`.
 
-Question: **What cirty is this person in?**
+Question: **What city is this person in?**
 
 It is not related to the place where the image has been taken, so the GPS Position metadata is useless. Looking on these URLs, on the GitHub one it is reported `London`.
 
