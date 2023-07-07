@@ -1,0 +1,1 @@
+Questo folder deve essere messo in Exclusion per l'antivirus perché dal momento che contiene codice malevolo, i file .md possono essere messi in quarantena e cancellati.
