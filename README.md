@@ -1,2 +1,2 @@
-# TryHackMe
-TryHackMe Writeups
+# WriteUps
+hackTheBox and TryHackMe Writeups
