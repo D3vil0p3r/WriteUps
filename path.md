@@ -600,7 +600,7 @@ steghide extract -sf cute-alien.jpg
 Enter passphrase:<Area51>
 wrote extracted data to "message.txt".
 ```
-If you don't know the password, use `stegcracker` or `stegseek <filename.jpg> rockyou.txt`.
+If you don't know the password, use `stegcracker` or `stegseek cute-alien.jpg rockyou.txt`.
 
 Note that if you use `binwalk`, sometimes you don't see the right hidden files, so use always for first `steghide`.
 
