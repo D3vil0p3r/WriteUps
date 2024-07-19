@@ -383,3 +383,113 @@ However, there are many different ways to find such cloud storage. One of the ea
 #### Google Search for Azure
 
 ![Azure Blob](https://academy.hackthebox.com/storage/modules/112/gsearch2.png)
+
+Here we can already see that the links presented by Google contain PDFs. When we search for a company that we may already know or want to know, we will also come across other files such as text documents, presentations, codes, and many others.
+
+#### Target Website - Source Code
+
+Such content is also often included in the source code of the web pages, from where the images, JavaScript codes, or CSS are loaded. This procedure often relieves the web server and does not store unnecessary content.
+
+![Source Code](https://academy.hackthebox.com/storage/modules/112/cloud3.png)
+
+#### domain.glass
+
+Third-party providers such as [domain.glass](https://domain.glass/) can also tell us a lot about the company's infrastructure. As a positive side effect, we can also see that Cloudflare's security assessment status has been classified as "Safe". This means we have already found a security measure that can be noted for the second layer (gateway).
+
+![domain.glass](https://academy.hackthebox.com/storage/modules/112/cloud1.png)
+
+#### GrayHatWarfare
+
+Another very useful provider is [GrayHatWarfare](https://buckets.grayhatwarfare.com/). We can do many different searches, discover AWS, Azure, and GCP cloud storage, and even sort and filter by file format. Therefore, once we have found them through Google, we can also search for them on GrayHatWarefare and passively discover what files are stored on the given cloud storage.
+
+![GrayHatWarfare](https://academy.hackthebox.com/storage/modules/112/cloud2.png)
+
+Many companies also use abbreviations of the company name, which are then used accordingly within the IT infrastructure. Such terms are also part of an excellent approach to discovering new cloud storage from the company. We can also search for files simultaneously to see the files that can be accessed at the same time.
+
+#### Private and Public SSH Keys Leaked
+
+![SSH Keys Leaked](https://academy.hackthebox.com/storage/modules/112/ghw1.png)
+
+Sometimes when employees are overworked or under high pressure, mistakes can be fatal for the entire company. These errors can even lead to SSH private keys being leaked, which anyone can download and log onto one or even more machines in the company without using a password.
+
+![SSH Private Key](https://academy.hackthebox.com/storage/modules/112/ghw2.png)
+
+### Staff
+
+Searching for and identifying employees on social media platforms can also reveal a lot about the teams' infrastructure and makeup. This, in turn, can lead to us identifying which technologies, programming languages, and even software applications are being used. To a large extent, we will also be able to assess each person's focus based on their skills. The posts and material shared with others are also a great indicator of what the person is currently engaged in and what that person currently feels is important to share with others.
+
+Employees can be identified on various business networks such as [LinkedIn](https://www.linkedin.com/) or [Xing](https://www.xing.de/). Job postings from companies can also tell us a lot about their infrastructure and give us clues about what we should be looking for.
+
+#### LinkedIn - Job Post
+
+```
+Required Skills/Knowledge/Experience:
+
+* 3-10+ years of experience on professional software development projects.
+
+« An active US Government TS/SCI Security Clearance (current SSBI) or eligibility to obtain TS/SCI within nine months.
+« Bachelor's degree in computer science/computer engineering with an engineering/math focus or another equivalent field of discipline.
+« Experience with one or more object-oriented languages (e.g., Java, C#, C++).
+« Experience with one or more scripting languages (e.g., Python, Ruby, PHP, Perl).
+« Experience using SQL databases (e.g., PostgreSQL, MySQL, SQL Server, Oracle).
+« Experience using ORM frameworks (e.g., SQLAIchemy, Hibernate, Entity Framework).
+« Experience using Web frameworks (e.g., Flask, Django, Spring, ASP.NET MVC).
+« Proficient with unit testing and test frameworks (e.g., pytest, JUnit, NUnit, xUnit).
+« Service-Oriented Architecture (SOA)/microservices & RESTful API design/implementation.
+« Familiar and comfortable with Agile Development Processes.
+« Familiar and comfortable with Continuous Integration environments.
+« Experience with version control systems (e.g., Git, SVN, Mercurial, Perforce).
+
+Desired Skills/Knowledge/ Experience:
+
+« CompTIA Security+ certification (or equivalent).
+« Experience with Atlassian suite (Confluence, Jira, Bitbucket).
+« Algorithm Development (e.g., Image Processing algorithms).
+« Software security.
+« Containerization and container orchestration (Docker, Kubernetes, etc.)
+« Redis.
+« NumPy.
+```
+
+From a job post like this, we can see, for example, which programming languages are preferred: **Java**, **C#**, **C++**, **Python**, **Ruby**, **PHP**, **Perl**. It also required that the applicant be familiar with different databases, such as: **PostgreSQL**, **Mysql**, and **Oracle**. In addition, we know that different frameworks are used for web application development, such as: **Flask**, **Django**, **ASP.NET**, **Spring**.
+
+Furthermore, we use **REST APIs**, **Github**, **SVN**, and **Perforce**. The job offer also results that the company works with Atlassian Suite, and therefore there may be resources that we could potentially access. We can see some skills and projects from the career history that give us a reasonable estimate of the employee's knowledge.
+
+#### LinkedIn - Employee #1 About
+
+![Linkedin Employee](https://academy.hackthebox.com/storage/modules/112/linkedin-pers2.png)
+
+We try to make business contacts on social media sites and prove to visitors what skills we bring to the table, which inevitably leads to us sharing with the public what we know and what we have learned so far. Companies always hire employees whose skills they can use and apply to the business. For example, we know that Flask and Django are web frameworks for the Python programming language.
+
+If we do a little search for Django security misconfigurations, we will eventually come across the following [Github repository](https://github.com/boomcamp/django-security) that describes OWASP Top10 for Django. We can use this to understand the inner structure of Django and how it works. The best practices also often tell us what to look for. Because many blindly trust them and even name many of the files as shown in the instructions.
+
+#### GitHub
+
+![GitHub](https://academy.hackthebox.com/storage/modules/112/github.png)
+
+Showing our projects can, of course, be of great advantage to make new business contacts and possibly even get a new job, but on the other hand, it can lead to mistakes that will be very difficult to fix. For example, in one of the files, we can discover the employee's personal email address, and upon deeper investigation, the web application has a hardcoded [JWT token](https://jwt.io/).
+
+#### LinkedIn - Employee #2 Career
+
+![Linkedin Employee Experience](https://academy.hackthebox.com/storage/modules/112/linkedin-pers1.png)
+
+LinkedIn offers a comprehensive search for employed, sorted by connections, locations, companies, school, industry, profile language, services, names, titles, and more. Understandably, the more detailed information we provide there, the fewer results we get. Therefore, we should think carefully about the purpose of performing the search.
+
+Suppose we are trying to find the infrastructure and technology the company is most likely to use. We should look for technical employees who work both in development and security. Because based on the security area and the employees who work in that area, we will also be able to determine what security measures the company has put in place to secure itself.
+
+## Host Based Enumeration
+
+### FTP
+
+The **File Transfer Protocol (FTP)** is one of the oldest protocols on the Internet. The FTP runs within the application layer of the TCP/IP protocol stack. Thus, it is on the same layer as **HTTP** or **POP**. These protocols also work with the support of browsers or email clients to perform their services. There are also special FTP programs for the File Transfer Protocol.
+
+Let us imagine that we want to upload local files to a server and download other files using the [FTP](https://datatracker.ietf.org/doc/html/rfc959) protocol. In an FTP connection, two channels are opened. First, the client and server establish a control channel through **TCP port 21**. The client sends commands to the server, and the server returns status codes. Then both communication participants can establish the data channel via **TCP port 20**. This channel is used exclusively for data transmission, and the protocol watches for errors during this process. If a connection is broken off during transmission, the transport can be resumed after re-established contact.
+
+A distinction is made between **active** and **passive** FTP. In the active variant, the client establishes the connection as described via TCP port 21 and thus informs the server via which client-side port the server can transmit its responses. However, if a firewall protects the client, the server cannot reply because all external connections are blocked. For this purpose, the **passive mode** has been developed. Here, the server announces a port through which the client can establish the data channel. Since the client initiates the connection in this method, the firewall does not block the transfer.
+
+The FTP knows different [commands](https://www.smartfile.com/blog/the-ultimate-ftp-commands-list/) and status codes. Not all of these commands are consistently implemented on the server. For example, the client-side instructs the server-side to upload or download files, organize directories or delete files. The server responds in each case with a status code that indicates whether the command was successfully implemented. A list of possible status codes can be found [here](https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes).
+
+Usually, we need credentials to use FTP on a server. We also need to know that FTP is a **clear-text** protocol that can sometimes be sniffed if conditions on the network are right. However, there is also the possibility that a server offers **anonymous FTP**. The server operator then allows any user to upload or download files via FTP without using a password. Since there are security risks associated with such a public FTP server, the options for users are usually limited.
+
+### TFTP
+
