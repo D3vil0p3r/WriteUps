@@ -101,6 +101,37 @@ do_connect: Connection to 10.x.x.x failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOU
 Unable to connect with SMB1 -- no workgroup available.
 ```
 
+## Sniffing traffic from all around antennas
+
+First, terminate all the processes that can make issues:
+```
+airmon-ng check kill
+```
+Enable our wireless interface to work in "monitor mode":
+```
+airmon-ng start wlan1
+```
+The output should contain a string like `monitor mode enable`. In this manner, the interface `wlan1` is in monitor mode, so it will sniff the information around and cannot be intercepted because it is only receiving but not transmitting any data. Indeed, by opening Wireshark, we would see only incoming data. Useful information could be inside "beacon frames" where you can check if there are security mechanisms like OWE, 802.1e and so on. So, beacon frames could provide several information.
+
+Now we must dump traffic in a cap file:
+```
+airodump-ng --band abg wlan1 --essid "Contoso-Corporate" -w <outfile>
+```
+The command dumps the traffic from all networks on the a, b and g bands. If you don't specify `-w` argument, it will save files by using a default name.
+
+The first section of the running command shows the access points with "Contoso-Corporate".
+The second section contains the list of clients connected to the access points. The clients are specified under the "STATION" column, while the BSSID is the MAC address of the access point). If we get some `not associated`, it means that it is a client with a wireless card that is not connected to any access point. We see that because, even if a client is not connected to anything, if it has the WiFi enabled, it still transmits data.
+
+By the way, from the last command above, we must identify on which channels the "Contoso-Corporate" is working on. We retrieve this information from the first section. Depending on the antenna you are using to sniff, the sniffer might work on a lot of channels (just see the `CH` string on top-left side of the running command), while an access point, when active, generally is fixed on a specific channel, unless of particular events like collisions. Let's guess our  Then you can run:
+```
+airodump-ng --band abg wlan1 --channel 1 --essid "Contoso-Corporate" --bssid <MAC-address-access-point> -w <outfile>
+```
+By this command, we sniff only on the channel 1 of "Contoso-Corporate".
+
+Now, if we want to capture for example the 4-Way Handshaking, we can now connect a client to the rogue access point. The sniffer will capture the traffic and store it in the cap file.
+
+For further checks, you can open the cap file by Wireshark and analyse it. The first EAP calls are in cleartext and cannot be encrypted, because they are needed to exchange the certificate.
+
 ## Network segmentation verified from Guest WiFi to Corporate WiFi
 
 ```
@@ -126,4 +157,22 @@ default via 10.x.x.x dev wlan0 proto dhcp src 10.x.x.x metric 600
 search pwlan.ch
 nameserver 193.x.x.x
 nameserver 193.x.x.x
+
+┌──2024/07/04─12:06:28──(sysop@xka)-[~/Downloads/EAP_buster]
+└─$ smbclient -L 10.x.x.x -U <username>
+do_connect: Connection to 10.x.x.x failed (Error NT_STATUS_IO_TIMEOUT)
+An attempt has been made to spoof the IP address:
+┌──2024/07/04─12:31:06──(sysop@xka)-[~/Downloads/EAP_buster]
+└─$ sudo ip route del default dev wlan0
+┌──2024/07/04─12:31:20──(sysop@xka)-[~/Downloads/EAP_buster]
+└─$ sudo ip route add default via 10.y.y.y dev wlan0
+┌──2024/07/04─12:31:53──(sysop@xka)-[~/Downloads/EAP_buster]
+└─$ ping 10.y.y.y
+PING 10.y.y.y (10.y.y.y) 56(84) bytes of data.
+^C
+--- 10.y.y.y ping statistics ---
+8 packets transmitted, 0 received, 100% packet loss, time 7157ms
+┌──2024/07/04─12:32:17──(sysop@xka)-[~/Downloads/EAP_buster]
+└─$
 ```
+In the example above, it was not possible to reach (ping) internal resources.
