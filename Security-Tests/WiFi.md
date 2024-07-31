@@ -130,7 +130,15 @@ By this command, we sniff only on the channel 1 of "Contoso-Corporate".
 
 Now, if we want to capture for example the 4-Way Handshaking, we can now connect a client to the rogue access point. The sniffer will capture the traffic and store it in the cap file.
 
-For further checks, you can open the cap file by Wireshark and analyse it. The first EAP calls are in cleartext and cannot be encrypted, because they are needed to exchange the certificate.
+For further checks, you can open the cap file by Wireshark and analyse it. The first EAP calls are in cleartext and cannot be encrypted, because they are needed to exchange the certificate. However, from the packets, we can extract useful information related to the company. The encryption will start after the "Success" that confirms we are connected correctly to the access point.
+
+## Rogue Access Point
+
+To set up a rogue access point, run:
+```
+sudo eaphammer -i wlan1 --channel 1 --auth wpa-eap --essid Contoso-Corporate
+```
+I enforce this rogue access point to work on channel 1. After this, we can use the legitimate client to connect to the rogue access point. Note that if you are in the range of the legitimate access point, your client will see only one SSID, so you must be sure to connect to the rogue one.
 
 ## Network segmentation verified from Guest WiFi to Corporate WiFi
 
